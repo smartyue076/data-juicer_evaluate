@@ -7,6 +7,7 @@ dataset:
 export_path: /home/xuyue/cost_estimate/data-juicer_result/text_pipeline/000358/result.jsonl
 np: 50
 open_tracer: true
+use_cache: false
 process:
 - clean_email_mapper: null
 - clean_links_mapper: null

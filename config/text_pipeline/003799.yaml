@@ -1,0 +1,50 @@
+project_name: Data-Juicer-recipes-c4
+dataset:
+  configs:
+  - type: local
+    path: /home/xuyue/cost_estimate/data-juicer_dataset/RedPajama/c4/c4-train.01010-of-01024.jsonl
+    format: jsonl
+export_path: /home/xuyue/cost_estimate/data-juicer_result/text_pipeline/003799/result.jsonl
+np: 50
+open_tracer: true
+use_cache: false
+process:
+- clean_email_mapper: null
+- clean_links_mapper: null
+- fix_unicode_mapper: null
+- punctuation_normalization_mapper: null
+- whitespace_normalization_mapper: null
+- alphanumeric_filter:
+    tokenization: false
+    min_ratio: 0.6
+    max_ratio: 0.9
+- average_line_length_filter:
+    max_len: 3000
+- character_repetition_filter:
+    rep_len: 10
+    max_ratio: 0.3
+- language_id_score_filter:
+    min_score: 0.7
+- maximum_line_length_filter:
+    max_len: 3000
+- perplexity_filter:
+    lang: en
+    max_ppl: 4000
+- special_characters_filter:
+    max_ratio: 0.3
+- words_num_filter:
+    tokenization: false
+    min_num: 20
+    max_num: 10000
+- word_repetition_filter:
+    lang: en
+    tokenization: false
+    rep_len: 10
+    max_ratio: 0.2
+- document_simhash_deduplicator:
+    tokenization: space
+    window_size: 6
+    lowercase: false
+    ignore_pattern: \p{P}
+    num_blocks: 6
+    hamming_distance: 4

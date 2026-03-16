@@ -1,0 +1,56 @@
+project_name: Data-Juicer-recipes-c4
+dataset:
+  configs:
+  - type: local
+    path: /home/xuyue/cost_estimate/data-juicer_dataset/RedPajama/c4/c4-train.01010-of-01024.jsonl
+    format: jsonl
+  - type: local
+    path: /home/xuyue/cost_estimate/data-juicer_dataset/RedPajama/c4/c4-train.01011-of-01024.jsonl
+    format: jsonl
+  - type: local
+    path: /home/xuyue/cost_estimate/data-juicer_dataset/RedPajama/c4/c4-train.01012-of-01024.jsonl
+    format: jsonl
+export_path: /home/xuyue/cost_estimate/data-juicer_result/text_pipeline/001375/result.jsonl
+np: 50
+open_tracer: true
+use_cache: false
+process:
+- clean_email_mapper: null
+- clean_links_mapper: null
+- fix_unicode_mapper: null
+- punctuation_normalization_mapper: null
+- whitespace_normalization_mapper: null
+- alphanumeric_filter:
+    tokenization: false
+    min_ratio: 0.5
+    max_ratio: 0.8
+- average_line_length_filter:
+    max_len: 2000
+- character_repetition_filter:
+    rep_len: 5
+    max_ratio: 0.2
+- language_id_score_filter:
+    min_score: 0.5
+- maximum_line_length_filter:
+    max_len: 5000
+- perplexity_filter:
+    lang: en
+    max_ppl: 5000
+- special_characters_filter:
+    max_ratio: 0.4
+- words_num_filter:
+    tokenization: true
+    min_num: 20
+    max_num: 10000
+- word_repetition_filter:
+    lang: en
+    tokenization: true
+    rep_len: 10
+    max_ratio: 0.231
+- document_simhash_deduplicator:
+    tokenization: space
+    window_size: 6
+    lowercase: true
+    ignore_pattern: \p{P}
+    num_blocks: 6
+    hamming_distance: 4
